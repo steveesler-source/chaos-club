@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chaos Club</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="App header">
+        <div>
+          <p class="eyebrow">Daily private party game</p>
+          <h1>Chaos Club</h1>
+        </div>
+        <button id="resetButton" class="ghost-button" type="button">New Question</button>
+      </section>
+
+      <section class="hero-panel">
+        <div class="round-badge">
+          <span id="roundDay">Today</span>
+          <strong id="roundStatus">Setup</strong>
+        </div>
+        <h2 id="challengeText">Create your group to unlock today's chaos.</h2>
+        <p id="challengeHint">A tiny game for the people who already share your funniest context.</p>
+      </section>
+
+      <nav class="stepper" aria-label="Round progress">
+        <button class="step active" data-step="group" type="button">
+          <span>1</span>
+          Group
+        </button>
+        <button class="step" data-step="answers" type="button">
+          <span>2</span>
+          Answers
+        </button>
+        <button class="step" data-step="votes" type="button">
+          <span>3</span>
+          Vote
+        </button>
+        <button class="step" data-step="reveal" type="button">
+          <span>4</span>
+          Reveal
+        </button>
+      </nav>
+
+      <section id="groupView" class="view active-view">
+        <div class="panel invite-panel">
+          <label for="publicUrl">Public app URL</label>
+          <div class="inline-form">
+            <input id="publicUrl" type="url" placeholder="https://your-chaos-club.app" />
+            <button id="savePublicUrlButton" type="button">Save</button>
+          </div>
+          <p id="hostingStatus" class="microcopy">This preview is local. Add a deployed URL before sharing with friends.</p>
+
+          <label for="inviteLink" class="stacked-label">Invite link</label>
+          <div class="inline-form">
+            <input id="inviteLink" type="text" readonly />
+            <button id="copyInviteButton" type="button">Copy</button>
+          </div>
+          <p id="copyStatus" class="microcopy">Local links only work on this computer. A real online round also needs shared backend storage.</p>
+        </div>
+
+        <div class="panel">
+          <label for="groupName">Group name</label>
+          <div class="inline-form">
+            <input id="groupName" type="text" maxlength="32" placeholder="The Thursday Night Table" />
+            <button id="saveGroupButton" type="button">Save</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <label for="memberName">Add friends</label>
+          <div class="inline-form">
+            <input id="memberName" type="text" maxlength="24" placeholder="Maya" />
+            <button id="addMemberButton" type="button">Add</button>
+          </div>
+          <div id="memberList" class="pill-list" aria-live="polite"></div>
+        </div>
+
+        <div id="rosterStatus" class="status-grid"></div>
+        <button id="startRoundButton" class="primary-action" type="button">Start today's challenge</button>
+      </section>
+
+      <section id="answersView" class="view">
+        <div class="panel">
+          <label for="answerMember">You are</label>
+          <select id="answerMember"></select>
+          <label for="answerText">Your answer</label>
+          <textarea id="answerText" rows="4" maxlength="180" placeholder="Type something your friends will immediately regret laughing at."></textarea>
+          <button id="submitAnswerButton" class="primary-action" type="button">Submit answer</button>
+        </div>
+        <div id="answerStatus" class="status-grid"></div>
+        <div id="answerList" class="card-list"></div>
+      </section>
+
+      <section id="votesView" class="view">
+        <div class="panel">
+          <label for="voteMember">You are</label>
+          <select id="voteMember"></select>
+          <p class="microcopy">Answers are anonymous until reveal. Pick the one that deserves today's crown.</p>
+        </div>
+        <div id="voteStatus" class="status-grid"></div>
+        <div id="voteList" class="card-list"></div>
+      </section>
+
+      <section id="revealView" class="view">
+        <div id="winnerCard" class="winner-card">
+          <p class="eyebrow">Today's winner</p>
+          <h2>No winner yet</h2>
+          <p>Collect votes to reveal the recap.</p>
+        </div>
+        <div class="panel">
+          <label for="recapTone">Recap style</label>
+          <select id="recapTone">
+            <option value="tabloid">Tiny Tabloid</option>
+            <option value="sports">Overdramatic Sports Desk</option>
+            <option value="minutes">Official Group Minutes</option>
+          </select>
+          <button id="generateRecapButton" class="primary-action" type="button">Generate recap</button>
+        </div>
+        <article id="recapCard" class="recap-card">The recap will appear here after the reveal.</article>
+      </section>
+    </main>
+
+    <template id="memberPillTemplate">
+      <button class="pill" type="button"></button>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
