@@ -53,8 +53,6 @@ const elements = {
   roundStatus: document.querySelector("#roundStatus"),
   challengeText: document.querySelector("#challengeText"),
   challengeHint: document.querySelector("#challengeHint"),
-  publicUrl: document.querySelector("#publicUrl"),
-  hostingStatus: document.querySelector("#hostingStatus"),
   inviteLink: document.querySelector("#inviteLink"),
   copyStatus: document.querySelector("#copyStatus"),
   groupName: document.querySelector("#groupName"),
@@ -74,7 +72,6 @@ const elements = {
 };
 
 document.querySelector("#saveGroupButton").addEventListener("click", saveGroup);
-document.querySelector("#savePublicUrlButton").addEventListener("click", savePublicUrl);
 document.querySelector("#addMemberButton").addEventListener("click", addMember);
 document.querySelector("#startRoundButton").addEventListener("click", startRound);
 document.querySelector("#submitAnswerButton").addEventListener("click", submitAnswer);
@@ -92,10 +89,6 @@ elements.memberName.addEventListener("keydown", (event) => {
 
 elements.groupName.addEventListener("keydown", (event) => {
   if (event.key === "Enter") saveGroup();
-});
-
-elements.publicUrl.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") savePublicUrl();
 });
 
 elements.answerMember.addEventListener("change", () => setSelectedPlayer(elements.answerMember.value));
@@ -183,16 +176,11 @@ function currentChallenge() {
 }
 
 function getInviteUrl() {
-  const baseUrl = state.publicUrl || `${window.location.origin}${window.location.pathname}`;
-  return `${baseUrl}?group=${state.groupCode}`;
+  return `${window.location.origin}${window.location.pathname}?group=${state.groupCode}`;
 }
 
 function saveGroup() {
   updateGroup({ groupName: elements.groupName.value.trim() });
-}
-
-function savePublicUrl() {
-  updateGroup({ publicUrl: elements.publicUrl.value.trim().replace(/\/$/, "") });
 }
 
 function updateGroup(payload) {
@@ -305,12 +293,7 @@ function render() {
   elements.roundStatus.textContent = statusMap[state.activeStep] || "Setup";
   elements.challengeText.textContent = groupReady ? challenge.text : "Create your group to unlock today's chaos.";
   elements.challengeHint.textContent = groupReady ? challenge.hint : "Invite friends, let everyone answer from their own phone, then reveal the damage together.";
-  elements.publicUrl.value = state.publicUrl || "";
   elements.inviteLink.value = getInviteUrl();
-  elements.hostingStatus.textContent =
-    state.syncMode === "Shared backend"
-      ? "Backend is live. Friends using the public link share this same round."
-      : "Trying to reach the shared backend...";
   elements.groupName.value = state.groupName || "";
 
   renderSteps();

@@ -18,7 +18,6 @@ def default_group(code):
         "groupName": "",
         "members": ["Maya", "Sam", "Jess"],
         "groupCode": code,
-        "publicUrl": "",
         "activeStep": "group",
         "challengeIndex": random.randrange(CHALLENGE_COUNT),
         "answers": [],
@@ -73,8 +72,6 @@ def apply_action(group, action, payload):
     if action == "update_group":
         if "groupName" in payload:
             group["groupName"] = str(payload["groupName"])[:32]
-        if "publicUrl" in payload:
-            group["publicUrl"] = str(payload["publicUrl"]).rstrip("/")[:160]
         if "activeStep" in payload and payload["activeStep"] in {"group", "answers", "votes", "reveal"}:
             group["activeStep"] = payload["activeStep"]
 
