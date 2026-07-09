@@ -294,7 +294,9 @@ function render() {
   elements.challengeText.textContent = groupReady ? challenge.text : "Create your group to unlock today's chaos.";
   elements.challengeHint.textContent = groupReady ? challenge.hint : "Invite friends, let everyone answer from their own phone, then reveal the damage together.";
   elements.inviteLink.value = getInviteUrl();
-  elements.groupName.value = state.groupName || "";
+  if (document.activeElement !== elements.groupName) {
+    elements.groupName.value = state.groupName || "";
+  }
 
   renderSteps();
   renderViews();
