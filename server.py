@@ -16,7 +16,7 @@ LOCK = threading.Lock()
 def default_group(code):
     return {
         "groupName": "",
-        "members": ["Maya", "Sam", "Jess"],
+        "members": [],
         "groupCode": code,
         "activeStep": "group",
         "challengeIndex": random.randrange(CHALLENGE_COUNT),

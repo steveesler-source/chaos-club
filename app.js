@@ -212,6 +212,11 @@ function removeMember(name) {
 }
 
 function startRound() {
+  if (!state.members.length) {
+    elements.copyStatus.textContent = "Add at least one person before starting the round.";
+    return;
+  }
+
   sendAction("start_round");
 }
 
@@ -342,7 +347,9 @@ function renderAnswers() {
   elements.answerList.innerHTML = "";
 
   if (!state.answers.length) {
-    elements.answerList.innerHTML = `<div class="answer-card"><strong>No answers yet</strong><p>Waiting for the first brave person to submit from their own phone.</p></div>`;
+    elements.answerList.innerHTML = state.members.length
+      ? `<div class="answer-card"><strong>No answers yet</strong><p>Waiting for the first brave person to submit from their own phone.</p></div>`
+      : `<div class="answer-card"><strong>Add people first</strong><p>Add your name and invite friends before starting the question.</p></div>`;
     return;
   }
 
@@ -411,7 +418,7 @@ function renderStatuses() {
 
   elements.answerStatus.innerHTML = statusItems([
     ["Answered", `${answered.length}/${state.members.length}`],
-    ["Waiting on", waitingAnswers.length ? waitingAnswers.join(", ") : "Everyone"],
+    ["Waiting on", state.members.length ? waitingAnswers.length ? waitingAnswers.join(", ") : "Everyone" : "Add people"],
     ["Question", `#${(state.challengeIndex % challenges.length) + 1}`]
   ]);
 
